@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Git Grub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <style>
+      .padding {
+          padding-right:10px;    
+      }
+      
+      input[type=text] {
+          width: 55px;
+      }
+      /* Video pitch and Action */
+            .pitch {
+                padding: 2.5% 0%;
+            }
+            
+            .order {
+                padding: 2% 0%;
+            }
+            
+            .actions {
+                background-color: #343434;
+                padding: 3% 0%;
+            }
+            
+            .video,.thermometer,.order,.social,.statistics {
+                text-align: center;
+            }
+            
+            .statistics h3,.statistics p {
+                color: white;
+            }
+            /* Custom container */
+                    .container-narrow {
+                      margin: 0 auto;
+                      max-width: 700px;
+                    }
+      
+                    .container-narrow > hr {
+                      margin: 30px 0;
+                    }
+      
+                    /* Main marketing message and sign up button */
+                    .jumbotron {
+                      margin: 60px 0;
+                      text-align: center;
+                    }
+      
+                    .jumbotron h1 {
+                      font-size: 72px;
+                      line-height: 1;
+                    }
+      
+                    .jumbotron .btn {
+                      font-size: 21px;
+                      padding: 14px 24px;
+                    }
+      
+                    /* Supporting marketing content */
+                    .marketing {
+                      margin: 60px 0;
+                    }
+      
+                    .marketing p + h4 {
+                      margin-top: 28px;
+                    }
+                    
+                    /* Buttons */
+                    .btn-red-button {
+                          background-color: hsl(0, 82%, 37%) !important;
+                          background-repeat: repeat-x;
+                          filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ec4040", endColorstr="#ab1010");
+                          background-image: -khtml-gradient(linear, left top, left bottom, from(#ec4040), to(#ab1010));
+                          background-image: -moz-linear-gradient(top, #ec4040, #ab1010);
+                          background-image: -ms-linear-gradient(top, #ec4040, #ab1010);
+                          background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ec4040), color-stop(100%, #ab1010));
+                          background-image: -webkit-linear-gradient(top, #ec4040, #ab1010);
+                          background-image: -o-linear-gradient(top, #ec4040, #ab1010);
+                          background-image: linear-gradient(#ec4040, #ab1010);
+                          border-color: #ab1010 #ab1010 hsl(0, 82%, 31.5%);
+                          color: #fff !important;
+                          text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.36);
+                          -webkit-font-smoothing: antialiased;
+                    }
+                    
+                    #content {
+                        width: 400px;
+                        margin: 0 auto;
+                        background-color: #66ffff;
+                    }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+    </script>
+    <script src="assets/js/bootstrap.js">
+    </script>
+    <script src='/socket.io/socket.io.js'></script> 
+    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/dojo.js"
+            data-dojo-config='async: true'></script>
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+    <!-- Le fav and touch icons -->
+  </head>
+  <body>
+    <!-- /container -->
+    <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+            <li>
+            </li>
+            <li>
+            </li>
+        </ul>
+    </div>
+    <hr>
+    <div class="container">
+        <img src="https://s3.amazonaws.com/media.jetstrap.com/P4j1frVZTfC3TR3ReIO4_cheese.jpg" width="400" class="pull-right">
+        <h1>
+            <font size="300" color="blue">
+                <u>
+            Menu/Order
+        </u>
+            </font>
+        </h1>
+        <div class="control-group">
+            <div class="controls">
+            </div>
+        </div>
+		<!--
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <button href="index-iv" type="submit" class="btn btn-primary pull-right" id="SubmitOrder">
+                            Submit Order
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h2>
+                            <u class="pull-left">
+                               Grill
+                            </u>
+                        </h2>
+                    </td>
+                </tr>
+				
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Hamburger &nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $5.50
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input id="HamburgerQuantity" type="text" placeholder="Quantity" class="pull-left">
+                                 
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Cheese Burger &nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $4.50
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input id="CheeseBurgerQuantity" type="text" placeholder="Quantity" class="pull-left">
+                                 
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Philly Cheese Steak&nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $8.50
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input id="CheeseSteakQuantity" type="text" placeholder="Quantity" class="pull-left">
+                                 
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Grilled Cheese&nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $4.50
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input id="GrilledCheeseQuantity" type="text" placeholder="Quantity" class="pull-left">
+                                 
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Grilled Chicken&nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $6.50
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input id ="GilledChickenQuantity" type="text" placeholder="Quantity" class="pull-left">
+                                 
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Grilled Tilipia &nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $8.50
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input id="GrilledTilaapiaQuantity"type="text" placeholder="Quantity" class="pull-left">
+                                 
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h2>
+                            <u class="pull-left">
+                               Salad and Soup
+                            </u>
+                        </h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Greek Salad &nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $5.50
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input id="GreekSaladQuantity" type="text" placeholder="Quantity" class="pull-left">
+                                 
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Grilled Flank Steak Salad&nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $6.50
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input id="FlankSteakSaladQuantity" type="text" placeholder="Quantity" class="pull-left">
+                                 
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Broccoli Soup&nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $3.50
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input id="BroccoliSoupquantity"type="text" placeholder="Quantity" class="pull-left">
+                                 
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h2>
+                            <u class="pull-left">
+                               Saute
+                            </u>
+                        </h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Mongolian Chicken&nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $7.50
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input id="MongolianChickenQuantity" type="text" placeholder="Quantity" class="pull-left">
+                                 
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Thai Shrimp&nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $7.50
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input id="ThaiShrimpQuantity" type="text" placeholder="Quantity" class="pull-left">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Chinese Broccoli Beef&nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $7.00
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input id="BrocoliBeefQuantity"type="text" placeholder="Quantity" class="pull-left">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h2>
+                            <u class="pull-left">
+                               Oven
+                            </u>
+                        </h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Chicken Bake&nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $3.50
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input id="ChickenBakeQuantity" type="text" placeholder="Quantity" class="pull-left">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Pepperoni Pizza&nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $3.00
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input id="PepperoniPizzaQuantity"type="text" placeholder="Quantity" class="pull-left">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Sausage Pizza&nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $3.50
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input id="SausagePizzaQuantity"type="text" placeholder="Quantity"class="pull-left">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Goat Cheese Basil Pizza&nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $3.50
+                                </h5>
+                             <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input type="text" placeholder="Quantity" id="BasilPizzaQuantity" class="pull-left">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h2>
+                            <u class="pull-left">
+                               Deli
+                            </u>
+                        </h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Turkey Sandwich&nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $3.50
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input placeholder="Quantity" id"TurkeySandwichQuantity" type="text" class="pull-left">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Veggie Pannini&nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $3.50
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input placeholder="Quantity" id="VeggiePanniniQuantity" type="text" class="pull-left">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <h5 style="width: 250px; float: left;">
+                                    &nbsp; Tuna Salad Wrap&nbsp;
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <h5>
+                                    $4.50
+                                </h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <input placeholder="Quantity" id="TunaWrapQuantity" type="text" class="pull-left">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+			
+                <tr>
+                    <td>
+                        <button href="index-iv" type="submit" class="btn btn-primary pull-right" id="SubmitOrder">
+                            Submit Order
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+			--> 
+        </table>
+        <div class="container">
+        </div>
+    </div>
+    <footer>
+        <p class="pull-right">
+            GitGrub@Cisco© Company 2013
+            <img src="https://s3.amazonaws.com/media.jetstrap.com/zinr9kwcT32MNQnWZneD_Cisco-new-logo-should-be.gif" width="100">
+        </p>
+    </footer>
+    <script>
+	/*
+      var JSONOrder = {
+                    "orders": [] 
+                };
+		*/ 
+		
+		
+		
+		//From Jose's index.html 
+		var JSONOrder = {
+			"user":[],
+			"orders": []
+		};
+		//$(document).ready(function () {
+		var name = window.localStorage.getItem("UserName");
+		
+		JSONOrder.user.push({
+				"type" : 'name',
+				"value" : 'noname'
+			});
+			
+		// Modify order type here
+		JSONOrder.user.push({
+			"type" : 'orderType',
+			"value" : 'Eat in'
+		});
+		JSONOrder.user.push({
+			"type" : 'total',
+			"value" : 0
+		});
+		
+		// Should changed user name 
+		updateName(name); 
+		
+		
+		//}
+		var new_nav = new function() {
+		};
+		var x;
+		var old_navigator = window.navigator;
+		for (x in navigator) {
+			if (typeof navigator[x] == 'function') {
+				eval("new_nav." + x + " = function() { return old_navigator." + x
+						+ "();};");
+			} else {
+				eval("new_nav." + x + " = navigator." + x + ";");
+			}
+		}
+		new_nav.userAgent = "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_2 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8H7 Safari/6533.18.5";
+		new_nav.vendor = "Apple, Inc.";
+		window.navigator = new_nav;
+		
+		function findAndRemove(array, property, value) {
+		   $.each(array, function(index, result) {
+			  if(result[property] == value) {
+				  //Remove from array
+				  array.splice(index, 1);
+			  }    
+		   });
+		}
+		
+	
+		function createCheckElement(name, id, price) {
+			
+			var quantInput = document.createElement('input');
+			quantInput.setAttribute('type', 'text');
+			quantInput.setAttribute('id', id);
+			quantInput.setAttribute('name', name + 'Quant');
+			quantInput.setAttribute('size', 4);
+			quantInput.setAttribute('maxlength', 3);
+			quantInput.setAttribute('class', id);
+			quantInput.setAttribute('value', '');
+			
+			var orderList = document.getElementById("orders");
+					
+			def = this.value;
+			$(document).ready(function () {
+			  $('input[id='+id+']').bind('change', function(){
+				// Printing JSON object contents (not updated immediately because of code order) for debugging.
+								/*for(var i in JSONOrder.orders){
+					$("#menu #selected").append(JSONOrder.orders[i].name);
+				}*/
+			  });
+			  
+				$('input[id='+id+']').click(function(){
+					this.select();
+				});
+				$('input[id='+id+']').blur(function(){
+					if(this.value === ''){
+						$('input[id='+id+']').val('');
+						findAndRemove(JSONOrder.orders, 'id', id); 
+					}
+					else{
+						findAndRemove(JSONOrder.orders, 'id', id); 
+						JSONOrder.orders.push({
+							"id" : id,
+							"name" : name,
+							"quantity" : this.value,
+							"price" : price
+						});
+					}
+				});
+			});
+			
+			var label = orderList.innerHTML + " " + name + ": " + price + " <br>";
+			orderList.innerHTML = label;
+			orderList.appendChild(quantInput);
+			orderList.innerHTML = orderList.innerHTML + "<br>";
+		}
+		
+		
+		
+		function blank(a) { 
+			if(a.value == a.defaultValue) a.value = ""; 
+		}
+		
+		// Changed this function back if it doesn't work!!!!!!!!!!!!!
+		function updateName(nombre) {
+			
+			JSONOrder.user[0].value = nombre;
+			// Prints username from JSON
+			//$("#menu #selected").append(JSONOrder.user[0].value);
+		}
+		
+		
+		
+		//Calculate total price for a particular ORDER
+		function calculatePrice(order) {
+			var i = 0,
+			totalPrice = 0,
+			tax = 1; //MANAGER-SIDE
+
+			while(i < order.orders.length) {
+				totalPrice += order.orders[i].price * order.orders[i].quantity;
+				i++;
+			}
+			return Math.round(100*(totalPrice *tax))/100;
+		}
+		
+		function submitOrder(){
+			// Pass to web socket
+			
+			var socket = io.connect('/');
+			console.log("connected ");
+			
+			var totalPrice = calculatePrice(JSONOrder);
+			JSONOrder.user[2].value = totalPrice;
+			
+			/* Debugging 
+			for(var i in JSONOrder.user){
+					$("#menu #selected").append(JSONOrder.user[i].type + "<br>");
+					$("#menu #selected").append(JSONOrder.user[i].value + "<br>");
+					}
+			*/	
+			 console.log("attempting to send message");
+             socket.emit('Order In!', JSONOrder);
+                
+		}
+		</script>
+		
+        <!--    <script>
+        window.onload = function() {
+
+                var name = window.localStorage.getItem("UserName");
+				var orderType = window.localStorage.getItem("OrderType"); 
+                var orderNumber;
+                console.log(name); 
+				//console.log(orderType); //LEFT OFF HERE!!! WHOO!!!!!!!!!!!!!!!!!!!!
+            require(['dojo/dom', 'dojo/date/locale', 'dojo/domReady!'], function(dom) {
+                function dateFormat(date, format) { return dojo.date.locale.format( date, {selector: 'date', datePattern:format });}
+                function strip_id(key, value)  { return key == '_id' ? undefined : value; }
+                var socket = io.connect('/');
+                console.log("connected ");
+                var submit = dom.byId('SubmitOrder');
+                var GrilledTilaapiaQuantity = dom.byId('GrilledTilaapiaQuantity');
+                var HamburgerQuantity = dom.byId('HamburgerQuantity');
+                var CheeseBurgerQuantity = dom.byId('CheeseBurgerQuantity');
+                var CheeseSteakQuantity = dom.byId('CheeseSteakQuantity');
+				var GrilledCheeseQuantity = dom.byId('GrilledCheeseQuantity'); 
+                var GilledChickenQuantity = dom.byId('GilledChickenQuantity');
+                var GreekSaladQuantity = dom.byId('GreekSaladQuantity');
+                var FlankSteakSaladQuantity = dom.byId('FlankSteakSaladQuantity');
+                var BroccoliSoupquantity = dom.byId('BroccoliSoupquantity');
+                var MongolianChickenQuantity = dom.byId('MongolianChickenQuantity');
+                var ThaiShrimpQuantity = dom.byId('ThaiShrimpQuantity');
+                var BrocoliBeefQuantity = dom.byId('BrocoliBeefQuantity');
+                var ChickenBakeQuantity = dom.byId('ChickenBakeQuantity');
+                var PepperoniPizza = dom.byId('PepperoniPizza');
+                var SausagePizza = dom.byId('SausagePizza');
+                var BasilPizzaQuantity = dom.byId('BasilPizzaQuantity');
+				var TurkeySandwichQuantity = dom.byId('TurkeySandwichQuantity'); 
+				var VeggiePanniniQuantity = dom.byId('VeggiePanniniQuantity'); 
+				var TunaWrapQuantity = dom.byId('TunaWrapQuantity'); 
+                //waits for server to save the document and then gets the order number for future usage
+                socket.on('return',function (data) {
+                    orderNumber = data.orderid;
+                    window.localStorage.setItem("OrderNumber",orderNumber);
+                });
+                //saves items to json and sends
+                submit.onclick = function () {
+                    console.log("attemting to send message");
+                    socket.emit('message', {'ordered':'pickup','OrdererName':name,'GrilledTilaapiaQuantity':GrilledTilaapiaQuantity.value,'HamburgerQuantity':HamburgerQuantity.value,'CheeseBurgerQuantity':CheeseBurgerQuantity.value,'CheeseSteakQuantity':CheeseSteakQuantity.value,'GrilledCheeseQuantity':GrilledCheeseQuantity.value,'GilledChickenQuantity':GilledChickenQuantity.value,'GreekSaladQuantity':GreekSaladQuantity.value,
+					'FlankSteakSaladQuantity':FlankSteakSaladQuantity.value,'BroccoliSoupquantity':BroccoliSoupquantity.value,'MongolianChickenQuantity':MongolianChickenQuantity.value,'VeggiePanniniQuantity':VeggiePanniniQuantity.value,'TunaWrapQuantity':TunaWrapQuantity.value});
+                };
+            });
+        };
+    </script> --> 
+	<span id = "orders"></span>
+		<button onclick="submitOrder()">Submit Order</button><br><br>
+	<span id = "selected"></span>
+	<script>
+		createCheckElement("Burger", 123, 10.00); 
+		createCheckElement("Pizza", 124, 10.00);
+	</script> 
+  </body>
+</html>

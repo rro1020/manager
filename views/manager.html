@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <style>
+      body { padding-top: 60px; /* 60px to make the container go all the way
+      to the bottom of the topbar */ }
+    </style>
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+    <style>
+    </style>
+  </head>
+  <body>
+    
+    
+    <div class="well">
+    	<h3>
+    		Manager Console
+    	</h3>
+    	<p>
+    		Customer order management page
+    	</p>
+    </div>
+    <div class="container">
+    	
+    	<table id = "tblGrid" class="table">
+    		<tbody>
+    			<tr>
+    				<th>
+    					<h3>
+    						Customer
+    					</h3>
+    				</th>
+    				<th>
+    					<h3>
+    						Item
+    					</h3>
+    					<br>
+    				</th>
+    				<th>
+    					<h3>
+    						Quantity
+    					</h3>
+    				</th>
+    				<th>
+    					<h3>
+    						Price
+    					</h3>
+    				</th>
+					<th>
+    					<h3>
+    						Pickup/Delivery
+    					</h3>
+    				</th>
+    			</tr>
+    		</tbody>
+    	</table>
+    	<div id = "OrderDiv"></div>
+    		
+    </div>
+    <hr>
+    <div class="row-fluid pull-right">
+    </div>
+    <div class="control-group">
+    	<div class="controls">
+    	</div>
+    </div>
+    <h3>
+    	<br>
+    </h3>
+    <div class="control-group">
+    	<div class="controls">
+    	</div>
+    </div>
+	<!--
+    <div class="container">
+    	<h3 class="pull-left">
+    		Current list of foods:
+    	</h3>
+    	<hr>
+    	<div class="row-fluid pull-right">
+    		<div class="span span3" style="display: block;">
+    			<p class="text-center">
+    				Pizza
+    			</p>
+    		</div>
+    		<div class="span span3" style="display: block;">
+    			<p class="text-center">
+    				Salad
+    			</p>
+    		</div>
+    		<div class="span3" style="display: block;">
+    			<p class="text-center">
+    				Fish
+    			</p>
+    		</div>
+    		<div class="span3" style="display: block;">
+    			<p class="text-center">
+    				Burger
+    			</p>
+    		</div>
+    	</div>
+    	<div class="control-group">
+    		<div class="controls">
+    		</div>
+    	</div>
+    	<h3>
+    		Create new item:
+    	</h3>
+    	<div class="control-group">
+    		<label class="control-label">
+    			Create new item:
+    			<textarea></textarea>
+    		</label>
+    		<div class="controls">
+    		</div>
+    	</div>
+    	<div class="control-group">
+    		<label class="control-label">
+    			Preparation Time:
+    			<textarea></textarea>
+    		</label>
+    		<div class="controls">
+    		</div>
+    	</div>
+	
+    </div>
+	-->
+    <style>
+
+    </style>
+	<script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+    </script>
+    <script src="assets/js/bootstrap.js">
+    </script>
+    <script>
+      //add a new row to the table
+      function addRow(JSON)
+      {
+          var newRow;
+		  var oCell;
+			
+		  for (i in JSON.orders){ 
+			  //add a row to the rows collection and get a reference to the newly added row
+			  newRow = document.all("tblGrid").insertRow(-1);
+			  
+			  //add 4 cells (<td>) to the new row and set the innerHTML to contain text boxes
+			  			  
+			  oCell = newRow.insertCell();
+			  oCell.innerHTML = JSON.orderType + "&nbsp;&nbsp;<input" + 
+								" type='button' value='Delete' onclick='removeRow(this);'/>";   
+			 
+			  oCell = newRow.insertCell();
+			  oCell.innerHTML = (JSON.orders[i].price * JSON.orders[i].quantity).toFixed(2);
+			 			 
+			  oCell = newRow.insertCell();
+			  oCell.innerHTML = JSON.orders[i].quantity;
+			  
+			  oCell = newRow.insertCell();
+			  oCell.innerHTML = JSON.orders[i].name;
+			  
+			  oCell = newRow.insertCell();
+			  oCell.innerHTML = JSON.OrdererName;
+			  
+		  }
+	 }
+         
+      //deletes the specified row from the table
+      function removeRow(src)
+      {
+          /* src refers to the input button that was clicked. 
+             to get a reference to the containing <tr> element,
+             get the parent of the parent (in this case <tr>)
+          */   
+          var oRow = src.parentElement.parentElement;  
+          
+          //once the row reference is obtained, delete it passing in its rowIndex   
+          document.all("tblGrid").deleteRow(oRow.rowIndex);  
+      
+      }
+    </script>
+	
+	<script>
+		
+		var socket = io.connect('/');
+		console.log("connected ");
+		socket.on("manager", function (data) {
+			console.log("receiving message");
+			addRow(data);
+			//var orderList = document.getElementById("orderList");
+			//var updateList = orderList.innerHTML + data.OrdererName + "<br>";
+			//orderList.innerHTML = updateList;
+		});
+		
+	</script>
+	<!--
+	<div id = 'orderList'>
+		<b> Orders: </b><br><br>
+	</div>
+	-->
+  </body>
+</html>

@@ -1,0 +1,14 @@
+{
+    "name" : "polygot-writer",
+    "description" : "a polygot writer that allows for mutliple websites to use sockets and share a databse",
+    "version" : "0.0.1",
+    "dependencies" : {
+        "express" : "latest",
+        "mongodb" : "latest",
+        "socket.io" : "latest",
+        "express": "latest",
+        "express-notemplate": "latest",
+        "ejs":"latest"
+    },
+    "author" : "Daniel Campos dfcf93"
+}
