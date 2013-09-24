@@ -20,27 +20,7 @@ app.set('views', process.cwd() + '/views');
 app.engine('html', notemplate.__express);
 app.set('view engine', 'html');
 app.use(express.static(app.get('statics')));
-/*
-app.get("/", function(req, res){
-    res.render('index');
-});
 
-app.get('/index-i', function(req, res){
-    res.render('index-i');
-});
-
-app.get('/index-ii', function(req, res){
-    res.render('index-ii');
-});
-
-app.get('/index-iii', function(req, res){
-    res.render('index-iii');
-});
-
-app.get('/index-iv', function(req, res){
-    res.render('index-iv');
-});
-*/
 app.get('/', function(req, res){
 	res.render('manager'); 
 }); 
@@ -60,7 +40,7 @@ var mongoUrl = url.parse(uristring);
 // with the db.collection (<name>) changing to fit what it is connecting to
 mongo.Db.connect(uristring, function (err, db) { 
     console.log("Attempting connection to " + mongoUrl.protocol + "//" + mongoUrl.hostname + " (complete URL supressed).");
-    db.collection("messages2", function (err, collection) {
+    db.collection("messages", function (err, collection) {
 	    collection.isCapped(function (err, capped) { 
 	   		if (err) {
 				console.log("Error when detecting capped collection.  Aborting.  Capped collections are necessary for tailed cursors.");
@@ -122,43 +102,15 @@ function readAndPush (socket, collection, orderid) {
 		});
 	});
 };
-                   
-//	function takes on incoming socket message and then gives it a time stamp and some attributes
-//	then it is pushed and saved into the database. First a temp var, Doc, is created and added with base
-//	attributes. Then new attributes are added and it is saved to the database
-//  Daniel's Version of recieveAndSave 
-/*
-function recieveAndSave (socket, collection, orderid) {
-	socket.on("message", function (data) {
-		console.log("message recieved...Attemtping to save");
-		time = new Date();
-		var doc =[{"ordered":data.ordered,"OrdererName":data.OrdererName,"items":{"GrilledTilaapiaQuantity":data.GrilledTilaapiaQuantity,"HamburgerQuantity":data.HamburgerQuantity,"CheeseBurgerQuantity":data.CheeseBurgerQuantity,"CheeseSteakQuantity":data.CheeseSteakQuantity,"GrilledCheeseQuantity":data.GrilledCheeseQuantity,"GilledChickenQuantity":data.GilledChickenQuantity,"GreekSaladQuantity":data.GreekSaladQuantity,
-		"FlankSteakSaladQuantity":data.FlankSteakSaladQuantity,"BroccoliSoupquantity":data.BroccoliSoupquantity,"MongolianChickenQuantity":data.MongolianChickenQuantity,"VeggiePanniniQuantity":data.VeggiePanniniQuantity,"TunaWrapQuantity":data.TunaWrapQuantity},"timearrived":time.getTime(),"isdelivered":0}];
-		collection.insert(doc, function (err, inserted) {
-			//check error
-			if(err === null)
-			{
-				console.log("Record added as "+inserted[0].id);
-				orderid = inserted[0].id;
-				socket.emit("return",{"orderid":orderid});
-			}
-		});
-
-	});
-};
-*/
 
 function recieveAndSave (socket, collection) {
-	socket.on("Order In!", function (data) {
+	socket.on("order", function (data) {
 		console.log("message recieved...Attempting to save");
 		time = new Date();
-		
 		var doc =[{"orderType":data.user[1].value,"OrdererName":data.user[0].value, "totalPrice" : data.user[2].value, "orders": []}];
 		for (i in data.orders){ 
 			doc[0].orders.push(data.orders[i]);
 		}
-		
-		//var doc =[{"order type":data.user[1].type,"OrdererName":data.user[0].value, "totalPrice" : data.user[2].value,"orders": data.orders[1]}];
 		collection.insert(doc, function (err, inserted) {
 			//check error
 			if(err === null)
@@ -168,7 +120,6 @@ function recieveAndSave (socket, collection) {
 		});
 	});
 };
-
 // Duck-punching mongodb driver Cursor.each.  This now takes an interval that waits 
 // "interval" milliseconds before it pushes and calls again
 Cursor.prototype.intervalEach = function(interval, callback) {

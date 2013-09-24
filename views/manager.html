@@ -25,12 +25,13 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-    <style>
-    </style>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+    </script>
+    <script src="assets/js/bootstrap.js">
+    </script>
   </head>
   <body>
-    
-    
     <div class="well">
     	<h3>
     		Manager Console
@@ -40,7 +41,6 @@
     	</p>
     </div>
     <div class="container">
-    	
     	<table id = "tblGrid" class="table">
     		<tbody>
     			<tr>
@@ -73,8 +73,7 @@
     			</tr>
     		</tbody>
     	</table>
-    	<div id = "OrderDiv"></div>
-    		
+    	<div id = "OrderDiv"></div>	
     </div>
     <hr>
     <div class="row-fluid pull-right">
@@ -90,68 +89,6 @@
     	<div class="controls">
     	</div>
     </div>
-	<!--
-    <div class="container">
-    	<h3 class="pull-left">
-    		Current list of foods:
-    	</h3>
-    	<hr>
-    	<div class="row-fluid pull-right">
-    		<div class="span span3" style="display: block;">
-    			<p class="text-center">
-    				Pizza
-    			</p>
-    		</div>
-    		<div class="span span3" style="display: block;">
-    			<p class="text-center">
-    				Salad
-    			</p>
-    		</div>
-    		<div class="span3" style="display: block;">
-    			<p class="text-center">
-    				Fish
-    			</p>
-    		</div>
-    		<div class="span3" style="display: block;">
-    			<p class="text-center">
-    				Burger
-    			</p>
-    		</div>
-    	</div>
-    	<div class="control-group">
-    		<div class="controls">
-    		</div>
-    	</div>
-    	<h3>
-    		Create new item:
-    	</h3>
-    	<div class="control-group">
-    		<label class="control-label">
-    			Create new item:
-    			<textarea></textarea>
-    		</label>
-    		<div class="controls">
-    		</div>
-    	</div>
-    	<div class="control-group">
-    		<label class="control-label">
-    			Preparation Time:
-    			<textarea></textarea>
-    		</label>
-    		<div class="controls">
-    		</div>
-    	</div>
-	
-    </div>
-	-->
-    <style>
-
-    </style>
-	<script src="/socket.io/socket.io.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
-    </script>
-    <script src="assets/js/bootstrap.js">
-    </script>
     <script>
       //add a new row to the table
       function addRow(JSON)
@@ -184,7 +121,7 @@
 		  }
 	 }
          
-      //deletes the specified row from the table
+      //deletes the specified row from the table does not go to database
       function removeRow(src)
       {
           /* src refers to the input button that was clicked. 
@@ -198,7 +135,6 @@
       
       }
     </script>
-	
 	<script>
 		
 		var socket = io.connect('/');
@@ -212,10 +148,5 @@
 		});
 		
 	</script>
-	<!--
-	<div id = 'orderList'>
-		<b> Orders: </b><br><br>
-	</div>
-	-->
   </body>
 </html>
